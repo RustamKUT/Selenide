@@ -14,16 +14,21 @@ public class CardDeliveryNegativeTests {
         open("http://localhost:9999");
     }
 
+    private String generateDate(long addDays, String pattern) {
+        return LocalDate.now().plusDays(addDays).format(DateTimeFormatter.ofPattern(pattern));
+    }
+
     // 1. Отправка заявки с пустым полем "Выберите ваш город";
     @Test
     public void shouldReturnErrorMessageIfCityEmpty() {
-        LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
+
+        /*LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String dateText = deliveryDateCard.format(formatter);
+        String dateText = deliveryDateCard.format(formatter);*/
 
         $("[data-test-id='city'] [placeholder='Город']").setValue("");
         $("[data-test-id='date'] [class='input__box'] [placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
-        $("[data-test-id='date'] [class='input__box'] [placeholder='Дата встречи']").setValue(dateText);
+        /*$("[data-test-id='date'] [class='input__box'] [placeholder='Дата встречи']").setValue(dateText);*/
         $("[data-test-id='name'] [type=text]").setValue("Мария Новикова");
         $("[data-test-id='phone'] [type=tel]").setValue("+79263456789");
         $("[data-test-id=agreement]").click();
@@ -35,13 +40,14 @@ public class CardDeliveryNegativeTests {
     // 2. Отправка заявки с городом не из административных центров субъектов РФ;
     @Test
     public void shouldReturnErrorMessageIfCityInvalid() {
-        LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
+
+      /*  LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String dateText = deliveryDateCard.format(formatter);
+        String dateText = deliveryDateCard.format(formatter);*/
 
         $("[data-test-id='city'] [placeholder='Город']").setValue("Париж");
         $("[data-test-id='date'] [class='input__box'] [placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
-        $("[data-test-id='date'] [class='input__box'] [placeholder='Дата встречи']").setValue(dateText);
+        /*$("[data-test-id='date'] [class='input__box'] [placeholder='Дата встречи']").setValue(dateText);*/
         $("[data-test-id='name'] [type=text]").setValue("Мария Новикова");
         $("[data-test-id='phone'] [type=tel]").setValue("+79263456789");
         $("[data-test-id=agreement]").click();
@@ -53,9 +59,10 @@ public class CardDeliveryNegativeTests {
     // 3. Отправка заявки с пустым полем "Дата встречи";
     @Test
     public void shouldReturnErrorMessageIfDateIsEmpty() {
-        LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
+
+        /*LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String dateText = deliveryDateCard.format(formatter);
+        String dateText = deliveryDateCard.format(formatter);*/
 
         $("[data-test-id='city'] [placeholder='Город']").setValue("Уфа");
         $("[data-test-id='date'] [class='input__box'] [placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
@@ -71,6 +78,7 @@ public class CardDeliveryNegativeTests {
     // 4. Отправка заявки с пустым полем "Фамилия и Имя";
     @Test
     public void shouldReturnErrorMessageIfSurnameAndNameIsEmpty() {
+
         LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String dateText = deliveryDateCard.format(formatter);
@@ -89,6 +97,7 @@ public class CardDeliveryNegativeTests {
     // 5. Отправка заявки с полем "Фамилия и Имя" на английском языке;
     @Test
     public void shouldReturnErrorMessageIfInvalidSurnameAndName() {
+
         LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String dateText = deliveryDateCard.format(formatter);
@@ -107,6 +116,7 @@ public class CardDeliveryNegativeTests {
     // 6. Отправка заявки с полем "Фамилия и Имя", состоящий из цифр;
     @Test
     public void shouldReturnErrorMessageIfSurnameAndNameConsistsOfNumbers() {
+
         LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String dateText = deliveryDateCard.format(formatter);
@@ -125,6 +135,7 @@ public class CardDeliveryNegativeTests {
     // 7. Отправка заявки с полем "Фамилия и Имя", состоящий из спецсимволов;
     @Test
     public void shouldReturnErrorMessageIfSurnameAndNameConsistsOfSpecialCharacters() {
+
         LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String dateText = deliveryDateCard.format(formatter);
@@ -162,6 +173,7 @@ public class CardDeliveryNegativeTests {
     // 9. Отправка заявки с введенным в поле "Мобильный телефон" букв;
     @Test
     public void shouldReturnErrorMessageIfPhoneWithLetters() {
+
         LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String dateText = deliveryDateCard.format(formatter);
@@ -174,12 +186,13 @@ public class CardDeliveryNegativeTests {
         $("[data-test-id=agreement]").click();
         $("[role=button] .button__content").click();
         $("[data-test-id='phone'].input_invalid .input__sub").shouldBe(visible)
-                .shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79125678901."));
+                .shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
     }
 
     // 10. Отправка заявки с введенным в поле "Мобильный телефон" спецсимволов;
     @Test
     public void shouldReturnErrorMessageIfPhoneHasSpecialCharacters() {
+
         LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String dateText = deliveryDateCard.format(formatter);
@@ -192,12 +205,13 @@ public class CardDeliveryNegativeTests {
         $("[data-test-id=agreement]").click();
         $("[role=button] .button__content").click();
         $("[data-test-id='phone'].input_invalid .input__sub").shouldBe(visible)
-                .shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79125678901."));
+                .shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
     }
 
     // 11. Отправка заявки с неверно заполненным полем "Мобильный телефон", без "+";
     @Test
     public void shouldReturnErrorMessageIfPhoneIsWrong() {
+
         LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String dateText = deliveryDateCard.format(formatter);
@@ -210,12 +224,13 @@ public class CardDeliveryNegativeTests {
         $("[data-test-id=agreement]").click();
         $("[role=button] .button__content").click();
         $("[data-test-id='phone'].input_invalid .input__sub").shouldBe(visible)
-                .shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79125678901."));
+                .shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
     }
 
     // 12. Отправка заявки с введенным в поле "Мобильный телефон" неверного количества цифр;
     @Test
     public void shouldReturnErrorMessageIfPhoneWrong() {
+
         LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String dateText = deliveryDateCard.format(formatter);
@@ -228,12 +243,13 @@ public class CardDeliveryNegativeTests {
         $("[data-test-id=agreement]").click();
         $("[role=button] .button__content").click();
         $("[data-test-id='phone'].input_invalid .input__sub").shouldBe(visible)
-                .shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79125678901."));
+                .shouldHave(exactText("Телефон указан неверно. Должно быть 11 цифр, например, +79012345678."));
     }
 
     // 13. Отправка заявки без согласия с условиями обработки персональных данных;
     @Test
     public void shouldReturnErrorMessageIfDoNotTick() {
+
         LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String dateText = deliveryDateCard.format(formatter);

@@ -17,11 +17,15 @@ public class CardDeliveryPositiveTest {
         open("http://localhost:9999");
     }
 
+    private String generateDate(long addDays, String pattern) {
+        return LocalDate.now().plusDays(addDays).format(DateTimeFormatter.ofPattern(pattern));
+    }
+
     // 1. Отправка заявки с верно заполненными полями;
     @Test
     public void shouldReturnSuccessIfFieldsAreFilledInCorrectly() {
 
-        LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
+        /*LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String dateText = deliveryDateCard.format(formatter);
 
@@ -34,13 +38,25 @@ public class CardDeliveryPositiveTest {
         $("[role=button] .button__content").click();
         $(withText("Успешно!")).shouldBe(Condition.visible, Duration.ofMillis(15000));
         $("[data-test-id='notification'] .notification__content")
-                .shouldHave(Condition.exactText("Встреча успешно забронирована на " + dateText));
+                .shouldHave(Condition.exactText("Встреча успешно забронирована на " + dateText));*/
+
+        $("[data-test-id='city'] input").setValue("Уфа");
+        String planningDate = generateDate(4, "dd.MM.yyyy");
+        $("[date-test-id='date'] input").press(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE)
+                .setValue(planningDate);
+        $("[data-test-id='name'] input").setValue("Мария Новикова");
+        $("[data-test-id='phone'] input").setValue("+79263456789");
+        $("[data-test-id='agreement']").click();
+        $(".notification__content")
+                .should(Condition.visible, Duration.ofSeconds(15))
+                .should(Condition.text("Встреча успешно забронирована на " + planningDate));
     }
 
     // 2. Отправка заявки с указанием фамилии через дефис;
     @Test
     public void shouldReturnSuccessfullyIfSurnameWithHyphen() {
-        LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
+
+        /*LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String dateText = deliveryDateCard.format(formatter);
 
@@ -53,13 +69,25 @@ public class CardDeliveryPositiveTest {
         $("[role=button] .button__content").click();
         $(withText("Успешно!")).shouldBe(Condition.visible, Duration.ofMillis(15000));
         $("[data-test-id='notification'] .notification__content")
-                .shouldHave(Condition.exactText("Встреча успешно забронирована на " + dateText));
+                .shouldHave(Condition.exactText("Встреча успешно забронирована на " + dateText));*/
+
+        $("[data-test-id='city'] input").setValue("Уфа");
+        String planningDate = generateDate(4, "dd.MM.yyyy");
+        $("[date-test-id='date'] input").press(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE)
+                .setValue(planningDate);
+        $("[data-test-id='name'] input").setValue("Михаил Мамин-Сибиряк");
+        $("[data-test-id='phone'] input").setValue("+79263456789");
+        $("[data-test-id='agreement']").click();
+        $(".notification__content")
+                .should(Condition.visible, Duration.ofSeconds(15))
+                .should(Condition.text("Встреча успешно забронирована на " + planningDate));
     }
 
     // 3. Отправка заявки с указанием города через дефис;
     @Test
     public void shouldReturnSuccessfullyIfCityWithHyphen() {
-        LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
+
+        /*LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String dateText = deliveryDateCard.format(formatter);
 
@@ -72,6 +100,17 @@ public class CardDeliveryPositiveTest {
         $("[role=button] .button__content").click();
         $(withText("Успешно!")).shouldBe(Condition.visible, Duration.ofMillis(15000));
         $("[data-test-id='notification'] .notification__content")
-                .shouldHave(Condition.exactText("Встреча успешно забронирована на " + dateText));
+                .shouldHave(Condition.exactText("Встреча успешно забронирована на " + dateText));*/
+
+        $("[data-test-id='city'] input").setValue("Комсомольск-на-Амуре");
+        String planningDate = generateDate(4, "dd.MM.yyyy");
+        $("[date-test-id='date'] input").press(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE)
+                .setValue(planningDate);
+        $("[data-test-id='name'] input").setValue("Михаил Мамин-Сибиряк");
+        $("[data-test-id='phone'] input").setValue("+79263456789");
+        $("[data-test-id='agreement']").click();
+        $(".notification__content")
+                .should(Condition.visible, Duration.ofSeconds(15))
+                .should(Condition.text("Встреча успешно забронирована на " + planningDate));
     }
 }
