@@ -91,7 +91,7 @@ public class CardDeliveryPositiveTest {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
         String dateText = deliveryDateCard.format(formatter);
 
-        $("[data-test-id=city] [placeholder='Город']").setValue("Комсомольск-на-Амуре");
+        $("[data-test-id=city] [placeholder='Город']").setValue("Санкт-Петербург");
         $("[data-test-id=date] [class='input__box'] [placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
         $("[data-test-id=date] [class='input__box'] [placeholder='Дата встречи']").setValue(dateText);
         $("[data-test-id=name] [type=text]").setValue("Михаил Мамин-Сибиряк");
