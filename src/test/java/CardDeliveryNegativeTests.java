@@ -31,7 +31,7 @@ public class CardDeliveryNegativeTests {
         /*$("[data-test-id='date'] [class='input__box'] [placeholder='Дата встречи']").setValue(dateText);*/
         $("[data-test-id='name'] [type=text]").setValue("Мария Новикова");
         $("[data-test-id='phone'] [type=tel]").setValue("+79263456789");
-        $("[data-test-id=agreement]").click();
+        $("[data-test-id='agreement']").click();
         $("[role=button] .button__content").click();
         $("[data-test-id='city'].input_invalid .input__sub").shouldBe(visible).
                 shouldHave(exactText("Поле обязательно для заполнения"));
