@@ -1,6 +1,9 @@
+import com.codeborne.selenide.Condition;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.Keys;
+
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import static com.codeborne.selenide.Condition.exactText;
@@ -24,36 +27,60 @@ public class CardDeliveryNegativeTests {
 
         /*LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String dateText = deliveryDateCard.format(formatter);*/
+        String dateText = deliveryDateCard.format(formatter);
 
         $("[data-test-id='city'] [placeholder='Город']").setValue("");
         $("[data-test-id='date'] [class='input__box'] [placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
-        /*$("[data-test-id='date'] [class='input__box'] [placeholder='Дата встречи']").setValue(dateText);*/
+        $("[data-test-id='date'] [class='input__box'] [placeholder='Дата встречи']").setValue(dateText);
         $("[data-test-id='name'] [type=text]").setValue("Мария Новикова");
         $("[data-test-id='phone'] [type=tel]").setValue("+79263456789");
         $("[data-test-id='agreement']").click();
         $("[role=button] .button__content").click();
         $("[data-test-id='city'].input_invalid .input__sub").shouldBe(visible).
-                shouldHave(exactText("Поле обязательно для заполнения"));
+                shouldHave(exactText("Поле обязательно для заполнения"));*/
+
+        $("[data-test-id='city'] input").setValue("");
+        String planningDate = generateDate(4, "dd.MM.yyyy");
+        $("[date-test-id='date'] input").press(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE)
+                .setValue(planningDate);
+        $("[data-test-id='name'] input").setValue("Мария Новикова");
+        $("[data-test-id='phone'] input").setValue("+79263456789");
+        $("[data-test-id='agreement']").click();
+        $("button.button").click();
+        $(".notification__content")
+                .should(Condition.visible, Duration.ofSeconds(15))
+                .should(Condition.text("Поле обязательно для заполнения"));
     }
 
     // 2. Отправка заявки с городом не из административных центров субъектов РФ;
     @Test
     public void shouldReturnErrorMessageIfCityInvalid() {
 
-      /*  LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
+        /*LocalDate deliveryDateCard = LocalDate.now().plusDays(3);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-        String dateText = deliveryDateCard.format(formatter);*/
+        String dateText = deliveryDateCard.format(formatter);
 
-        $("[data-test-id='city'] [placeholder='Город']").setValue("Париж");
+        $("[data-test-id='city'] [placeholder='Город']").setValue("Сингапур");
         $("[data-test-id='date'] [class='input__box'] [placeholder='Дата встречи']").doubleClick().sendKeys(Keys.BACK_SPACE);
-        /*$("[data-test-id='date'] [class='input__box'] [placeholder='Дата встречи']").setValue(dateText);*/
+        $("[data-test-id='date'] [class='input__box'] [placeholder='Дата встречи']").setValue(dateText);
         $("[data-test-id='name'] [type=text]").setValue("Мария Новикова");
         $("[data-test-id='phone'] [type=tel]").setValue("+79263456789");
         $("[data-test-id=agreement]").click();
         $("[role=button] .button__content").click();
         $("[data-test-id='city'].input_invalid .input__sub").shouldBe(visible).
-                shouldHave(exactText("Доставка в выбранный город недоступна"));
+                shouldHave(exactText("Доставка в выбранный город недоступна"));*/
+
+        $("[data-test-id='city'] input").setValue("Сингапур");
+        String planningDate = generateDate(4, "dd.MM.yyyy");
+        $("[date-test-id='date'] input").press(Keys.chord(Keys.SHIFT, Keys.HOME), Keys.DELETE)
+                .setValue(planningDate);
+        $("[data-test-id='name'] input").setValue("Мария Новикова");
+        $("[data-test-id='phone'] input").setValue("+79263456789");
+        $("[data-test-id='agreement']").click();
+        $("button.button").click();
+        $(".notification__content")
+                .should(Condition.visible, Duration.ofSeconds(15))
+                .should(Condition.text("Доставка в выбранный город недоступна"));
     }
 
     // 3. Отправка заявки с пустым полем "Дата встречи";
